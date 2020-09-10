@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="How does the current American disaster compare to the previous worst disaster to hit US soil? Visit howmanyseptember11ths.com to find out.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>COVID-19 Deaths In Terms of September 11, 2001</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <style>#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
+</head>
+<body>
+  <section class="hero is-info is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <p class="title has-text-centered mb-6">
+          How many September 11th's would it take to equal current COVID-19 fatalities?
+        </p>
+        <div class="value-container">
+          <progress class="progress is-large is-primary" max="100" />
+        </div>
+      </div>
+    </div>
+    <div class="hero-foot pt-3 pb-3 has-text-centered" style="text-align:center;display:flex;align-items:center;justify-content:center;">
+      <span class="is-size-6">
+        Made with <span class="has-text-danger">♥</span> in Philadelphia
+      </span>
+      &nbsp;|<a class="button is-small is-text" href="https://github.com/jordanyaker/howmanyseptember11ths.com">
+        <span class="icon is-small has-text-white">
+          <i class="fab fa-github fa-lg"></i>
+        </span>
+      </a>
+    </div>
+  </section>
+  <script>
+    const SEPT_11TH_FATALITIES = 2977;
+
+    (function ready(fn) {
+      if (document.readyState != 'loading'){
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    })(function init() {
+      fetch('https://api.covidtracking.com/v1/us/current.json')
+        .then(resp => resp.json())
+        .then(([data]) => {
+          const deaths = data.death;
+          const el = document.querySelector('div.value-container');
+
+          el.innerHTML = '<p class="title has-text-centered">' + (deaths / SEPT_11TH_FATALITIES).toFixed(2) + '</p>';
+        })
+        .catch(err => {
+          // TODO: Add error handling.
+        });
+    })
+  </script>
+</body>
+</html>
