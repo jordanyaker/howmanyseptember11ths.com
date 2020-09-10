@@ -9,6 +9,8 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/moment@2.27.0/min/locales.min.js"></script>
   <style>#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:absolute;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style>
 </head>
 <body>
@@ -19,6 +21,9 @@
           How many September 11th's would it take to equal current COVID-19 fatalities?
         </p>
         <div class="value-container">
+          <p class="title has-text-centered">&nbsp;</p>
+        </div>
+        <div class="timestamp-container">
           <p class="title has-text-centered">&nbsp;</p>
         </div>
       </div>
@@ -44,13 +49,26 @@
         document.addEventListener('DOMContentLoaded', fn);
       }
     })(function init() {
-      fetch('https://api.covidtracking.com/v1/us/current.json')
+      fetch('https://data.cdc.gov/resource/r8kw-7aab.json')
         .then(resp => resp.json())
-        .then(([data]) => {
-          const deaths = data.death;
-          const el = document.querySelector('div.value-container');
+        .then((data) => {
+          let deaths = 0;
+          for (let index = 0; index < data.length; index++) {
+            if (typeof data[index].covid_deaths !== 'undefined') {
+              const parsed = parseInt(data[index].covid_deaths);
 
-          el.innerHTML = '<p class="title has-text-centered">' + (deaths / SEPT_11TH_FATALITIES).toFixed(2) + '</p>';
+              if (parsed != NaN) {
+                deaths += parsed;
+              }
+            }
+          }
+
+          const valueEl = document.querySelector('div.value-container');
+          const timestamp = moment(data[0].data_as_of).fromNow();
+          const timestampEl = document.querySelector('div.timestamp-container');
+          
+          valueEl.innerHTML = '<p class="title has-text-centered">' + (deaths / SEPT_11TH_FATALITIES).toFixed(2) + '</p>';
+          timestampEl.innerHTML = '<p class="subtitle mt-4 has-text-centered"><small><em>Based on data last updated by the <a href="https://data.cdc.gov">CDC</a> ' + timestamp + '</em></small></p>';
         })
         .catch(err => {
           // TODO: Add error handling.
