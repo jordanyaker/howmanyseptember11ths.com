@@ -49,12 +49,12 @@
         document.addEventListener('DOMContentLoaded', fn);
       }
     })(function init() {
-      fetch('https://data.cdc.gov/resource/r8kw-7aab.json')
+      fetch('https://data.cdc.gov/resource/r8kw-7aab.json?state=United%20States')
         .then(resp => resp.json())
         .then((data) => {
           let deaths = 0;
           for (let index = 0; index < data.length; index++) {
-            if (typeof data[index].covid_deaths !== 'undefined' && data[index].state === 'United States') {
+            if (typeof data[index].covid_deaths !== 'undefined') {
               const parsed = parseInt(data[index].covid_deaths);
 
               if (parsed != NaN) {
