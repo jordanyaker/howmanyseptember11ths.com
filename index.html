@@ -54,7 +54,7 @@
         .then((data) => {
           let deaths = 0;
           for (let index = 0; index < data.length; index++) {
-            if (typeof data[index].covid_deaths !== 'undefined') {
+            if (typeof data[index].covid_deaths !== 'undefined' && data[index].state === 'United States') {
               const parsed = parseInt(data[index].covid_deaths);
 
               if (parsed != NaN) {
