@@ -68,7 +68,7 @@
           const timestampEl = document.querySelector('div.timestamp-container');
           
           valueEl.innerHTML = '<p class="title has-text-centered">' + (deaths / SEPT_11TH_FATALITIES).toFixed(2) + '</p>';
-          timestampEl.innerHTML = '<p class="subtitle mt-4 has-text-centered"><small><em>Based on data last updated by the <a href="https://data.cdc.gov">CDC</a> ' + timestamp + '</em></small></p>';
+          timestampEl.innerHTML = '<p class="subtitle mt-4 has-text-centered"><small><em>Based on data last updated by the <a href="https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Week-Ending-D/r8kw-7aab">CDC</a> ' + timestamp + '</em></small></p>';
         })
         .catch(err => {
           // TODO: Add error handling.
