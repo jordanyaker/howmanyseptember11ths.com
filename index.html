@@ -54,8 +54,9 @@
         .then((data) => {
           let deaths = 0;
           for (let index = 0; index < data.length; index++) {
-            if (typeof data[index].covid_deaths !== 'undefined') {
-              const parsed = parseInt(data[index].covid_deaths || data[index].covid_19_deaths);
+            const attr = (data[index].covid_deaths || data[index].covid_19_deaths);
+            if (typeof attr !== 'undefined') {
+              const parsed = parseInt(attr);
 
               if (parsed != NaN) {
                 deaths += parsed;
