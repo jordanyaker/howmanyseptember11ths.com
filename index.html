@@ -55,7 +55,7 @@
           let deaths = 0;
           for (let index = 0; index < data.length; index++) {
             if (typeof data[index].covid_deaths !== 'undefined') {
-              const parsed = parseInt(data[index].covid_deaths);
+              const parsed = parseInt(data[index].covid_deaths || data[index].covid_19_deaths);
 
               if (parsed != NaN) {
                 deaths += parsed;
